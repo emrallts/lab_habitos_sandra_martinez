@@ -88,7 +88,7 @@ class _PanelHabitosState extends State<PanelHabitos> {
       return '¡Vas muy bien!';
     }
 
-    return '¡Día completado!';
+    return '¡Día completado! 🎉';
   }
 
   void _alternarHabito(int index) {
@@ -130,7 +130,9 @@ class _PanelHabitosState extends State<PanelHabitos> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Hábitos — $_totalCumplidos / ${_habitos.length}'),
+        title: Text(
+          'Hábitos | Cumplidos: $_totalCumplidos / ${_habitos.length}',
+        ),
       ),
 
       body: ListView(

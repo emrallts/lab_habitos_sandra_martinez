@@ -11,20 +11,66 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:lab_habitos_sandra_martinez/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+  testWidgets('muestra el estado inicial del panel', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.text('Hábitos | Cumplidos: 0 / 5'), findsOneWidget);
+    expect(find.text('¡Empecemos!'), findsOneWidget);
+    expect(find.text('Meta: 3 hábitos'), findsOneWidget);
+    expect(find.byType(CheckboxListTile), findsNWidgets(5));
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    await tester.drag(find.byType(ListView), const Offset(0, -1000));
+    await tester.pump();
+    expect(find.text('Sin nota'), findsOneWidget);
+  });
+
+  testWidgets('actualiza progreso, meta y modo enfoque', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const MyApp());
+
+    await tester.tap(find.byType(CheckboxListTile).first);
+    await tester.tap(find.byType(CheckboxListTile).at(1));
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Hábitos | Cumplidos: 2 / 5'), findsOneWidget);
+    expect(find.text('Buen inicio'), findsOneWidget);
+
+    await tester.tap(find.byType(SwitchListTile));
+    await tester.pump();
+    expect(find.byType(CheckboxListTile), findsNWidgets(3));
+
+    await tester.tap(find.byType(SwitchListTile));
+    await tester.pump();
+    expect(find.byType(CheckboxListTile), findsNWidgets(5));
+  });
+
+  testWidgets('guarda una nota y reinicia el día', (WidgetTester tester) async {
+    await tester.pumpWidget(const MyApp());
+
+    await tester.drag(find.byType(ListView), const Offset(0, -1000));
+    await tester.pump();
+    await tester.enterText(find.byType(TextField), 'Día productivo');
+    await tester.tap(find.text('Guardar nota'));
+    await tester.pump();
+    await tester.drag(find.byType(ListView), const Offset(0, -300));
+    await tester.pump();
+    expect(find.text('Día productivo'), findsNWidgets(2));
+
+    await tester.tap(find.byType(CheckboxListTile).first);
+    await tester.drag(find.byType(ListView), const Offset(0, -300));
+    await tester.pump();
+    await tester.tap(find.text('Reiniciar día'));
+    await tester.pump();
+
+    await tester.drag(find.byType(ListView), const Offset(0, 1000));
+    await tester.pump();
+    expect(find.text('Hábitos | Cumplidos: 0 / 5'), findsOneWidget);
+    await tester.drag(find.byType(ListView), const Offset(0, -1000));
+    await tester.pump();
+    expect(find.text('Sin nota'), findsOneWidget);
+    expect(find.text('Día productivo'), findsNothing);
   });
 }
