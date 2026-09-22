@@ -44,7 +44,11 @@ Los cambios de estado se realizan utilizando `setState()`.
 
 ![Meta completada](Capturas/completado.png)
 
+## Reflexión
 
+Este proyecto me ayudó a comprender mejor cómo manejar estados en Flutter y cómo estructurar una interfaz con interacción real del usuario. La parte más importante fue aprender a combinar `StatefulWidget`, `setState()` y widgets como `Slider`, `SwitchListTile` y `CheckboxListTile` para crear una experiencia funcional y útil en la vida diaria.
+
+También me permitió ver la importancia de la organización del código y del diseño de una aplicación que no solo se ve bien, sino que además aporta valor práctico. En general, este laboratorio me mostró cómo Flutter facilita la construcción de apps con lógica clara, buena presentación visual y un flujo de trabajo adaptable para proyectos más complejos.
 
 ## Ejecución
 
