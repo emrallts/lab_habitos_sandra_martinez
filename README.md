@@ -44,6 +44,8 @@ Los cambios de estado se realizan utilizando `setState()`.
 
 ![Meta completada](Capturas/completado.png)
 
+
+
 ## Ejecución
 
 Para ejecutar el proyecto:
